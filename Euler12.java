@@ -94,10 +94,8 @@ class PrimeList {
     private void add(int n) {
         Node node = new Node(n);
 
-        if (head == null)
-            head = node;
-        else
-            tail.setNext(node);
+        if (head == null) head = node;
+        else tail.setNext(node);
 
         tail = node;
     }
@@ -127,9 +125,7 @@ class PrimeList {
             //check if candidate divides any of the other primes in the list
             while (iter != null && prime <= Math.sqrt(cand)) {
                 prime = iter.getItem();
-
                 if (cand % prime == 0) break;
-
                 iter = iter.getNext();
             }
 
@@ -152,29 +148,25 @@ class PrimeList {
         //multiply divisors by count+1
 
         //get the necessary primes
-        while (getLast() < n)
-            findNextPrime();
+        while (getLast() < n) findNextPrime();
 
         int numDivisors = 1;
-        int count;
-        int prime = 0;
-
-        Node iter = head;
-
+        int prime = 0; //current prime dividing n
+        int count; //number of times current prime divides n
+        Node iter = head; //holds node with current prime
         int cur = n; //used to divide n by primes repeatedly
 
         while (iter != null && prime <= n) {
-            count = 0;
-            prime = iter.getItem();
+            prime = iter.getItem(); //get the next prime
+            count = 0; //reset count
 
-            while (cur % prime == 0) {
+            while (cur % prime == 0) { //divide by prime as many times as possible
                 cur /= prime;
                 count++;
             }
 
-            numDivisors *= count + 1;
-
-            iter = iter.getNext();
+            numDivisors *= count + 1; //update number of divisors
+            iter = iter.getNext(); //move to next node
         }
 
         return numDivisors;
